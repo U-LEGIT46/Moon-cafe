@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moon Cafe Clan Name Generator</title>
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:
+      radial-gradient(circle at 50% 20%, #20204a 0%, #0b0b18 42%, #030308 100%);
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 24px;
+  }
+
+  .card {
+    width: min(560px, 100%);
+    text-align: center;
+    padding: 34px 24px;
+    border: 1px solid rgba(150, 130, 255, .35);
+    border-radius: 22px;
+    background: rgba(10, 10, 24, .82);
+    box-shadow: 0 0 35px rgba(100, 80, 255, .18);
+    backdrop-filter: blur(10px);
+  }
+
+  h1 {
+    margin: 0 0 8px;
+    color: #c9b8ff;
+    font-size: clamp(28px, 7vw, 42px);
+    text-shadow: 0 0 18px rgba(160, 130, 255, .45);
+  }
+
+  .subtitle {
+    margin: 0 0 24px;
+    color: #aaa6c4;
+    font-size: 14px;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 18px;
+    color: white;
+    background: #151527;
+    border: 1px solid #3c3a62;
+    border-radius: 12px;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: #9b85ff;
+    box-shadow: 0 0 14px rgba(155, 133, 255, .2);
+  }
+
+  .result-box {
+    margin-top: 24px;
+    padding: 22px 12px;
+    min-height: 86px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #0a0a16;
+    border: 1px solid #292744;
+    overflow-wrap: anywhere;
+  }
+
+  .result {
+    font-size: clamp(24px, 7vw, 38px);
+    font-weight: bold;
+    letter-spacing: .5px;
+  }
+
+  button {
+    margin-top: 18px;
+    width: 100%;
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 11px;
+    background: #9b85ff;
+    color: #090812;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  button:hover { filter: brightness(1.1); }
+  button:active { transform: scale(.99); }
+
+  .examples {
+    margin-top: 18px;
+    color: #77738f;
+    font-size: 13px;
+  }
+</style>
+</head>
+
+<body>
+  <main class="card">
+    <h1>🌙 Moon Cafe Clan</h1>
+    <p class="subtitle">Moon Cafe Clan Name Generator</p>
+
+    <input
+      id="name"
+      type="text"
+      maxlength="40"
+      placeholder="Enter your name"
+      autocomplete="off"
+      oninput="generate()"
+    >
+
+    <div class="result-box">
+      <div class="result" id="output">MCを</div>
+    </div>
+
+    <button onclick="copyName()">Copy Name</button>
+
+    <div class="examples">
+      Examples: MCをLEGIT · MCをPlayer · MCを123
+    </div>
+  </main>
+
+<script>
+const PREFIX = "MCを";
+
+const boldMap = {
+  A:"𝐀",B:"𝐁",C:"𝐂",D:"𝐃",E:"𝐄",F:"𝐅",G:"𝐆",H:"𝐇",I:"𝐈",J:"𝐉",
+  K:"𝐊",L:"𝐋",M:"𝐌",N:"𝐍",O:"𝐎",P:"𝐏",Q:"𝐐",R:"𝐑",S:"𝐒",T:"𝐓",
+  U:"𝐔",V:"𝐕",W:"𝐖",X:"𝐗",Y:"𝐘",Z:"𝐙",
+  a:"𝐚",b:"𝐛",c:"𝐜",d:"𝐝",e:"𝐞",f:"𝐟",g:"𝐠",h:"𝐡",i:"𝐢",j:"𝐣",
+  k:"𝐤",l:"𝐥",m:"𝐦",n:"𝐧",o:"𝐨",p:"𝐩",q:"𝐪",r:"𝐫",s:"𝐬",t:"𝐭",
+  u:"𝐮",v:"𝐯",w:"𝐰",x:"𝐱",y:"𝐲",z:"𝐳",
+  0:"𝟎",1:"𝟏",2:"𝟐",3:"𝟑",4:"𝟒",5:"𝟓",6:"𝟔",7:"𝟕",8:"𝟖",9:"𝟗"
+};
+
+function convertToBoldUnicode(str) {
+  return [...str].map(c => boldMap[c] || c).join("");
+}
+
+function generate() {
+  const input = document.getElementById("name").value.trim();
+
+  // Keep Japanese/Unicode characters such as を, while removing
+  // control characters. Spaces are removed to match the original generator.
+  const name = [...input]
+    .filter(c => c !== "\n" && c !== "\r" && c !== "\t")
+    .join("")
+    .replace(/\s+/g, "");
+
+  const result = PREFIX + name;
+
+  document.getElementById("output").innerText =
+    convertToBoldUnicode(result);
+}
+
+async function copyName() {
+  const text = document.getElementById("output").innerText;
+
+  try {
+    await navigator.clipboard.writeText(text);
+    alert("Copied: " + text);
+  } catch {
+    const area = document.createElement("textarea");
+    area.value = text;
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+    alert("Copied: " + text);
+  }
+}
+
+generate();
+</script>
+</body>
+</html>
