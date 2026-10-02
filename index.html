@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>𝙻𝙴𝚂𝙱𝙸𝙰𝙽を𝙿𝚁𝙸𝙼𝙴</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(255,255,255,.75) 0 2px,
+            transparent 3px
+        ),
+
+        radial-gradient(
+            circle at 80% 15%,
+            rgba(255,255,255,.8) 0 2px,
+            transparent 3px
+        ),
+
+        radial-gradient(
+            circle at 30% 85%,
+            rgba(255,255,255,.6) 0 2px,
+            transparent 3px
+        ),
+
+        linear-gradient(
+            135deg,
+            #ffd6ec,
+            #e8d7ff,
+            #d9e8ff
+        );
+
+    overflow-x: hidden;
+}
+
+
+/* Top flower decoration */
+
+body::before {
+
+    content: "🌸  🌷  🌺  ✿  🌸  🌷";
+
+    position: fixed;
+
+    top: 20px;
+
+    left: 0;
+
+    width: 100%;
+
+    text-align: center;
+
+    font-size: 28px;
+
+    letter-spacing: 12px;
+
+    opacity: .75;
+
+    pointer-events: none;
+}
+
+
+/* Main card */
+
+.card {
+
+    position: relative;
+
+    width: 100%;
+
+    max-width: 560px;
+
+    padding: 32px;
+
+    border-radius: 30px;
+
+    background: rgba(255,255,255,.65);
+
+    backdrop-filter: blur(18px);
+
+    -webkit-backdrop-filter: blur(18px);
+
+    border: 2px solid rgba(255,255,255,.8);
+
+    box-shadow:
+
+        0 20px 60px rgba(150,90,170,.25),
+
+        inset 0 0 30px rgba(255,255,255,.45);
+
+    overflow: hidden;
+}
+
+
+/* Decorative flowers */
+
+.flower {
+
+    position: absolute;
+
+    font-size: 45px;
+
+    opacity: .65;
+
+    pointer-events: none;
+}
+
+
+.flower.one {
+
+    top: 10px;
+
+    right: 15px;
+
+    transform: rotate(15deg);
+}
+
+
+.flower.two {
+
+    bottom: 10px;
+
+    left: 10px;
+
+    transform: rotate(-20deg);
+}
+
+
+.flower.three {
+
+    bottom: 25px;
+
+    right: 20px;
+
+    font-size: 30px;
+}
+
+
+/* Main title */
+
+h1 {
+
+    margin: 5px 0 8px;
+
+    text-align: center;
+
+    font-size: 27px;
+
+    color: #7b3f91;
+
+    text-shadow:
+        0 2px 8px rgba(255,255,255,.8);
+}
+
+
+/* Subtitle */
+
+.subtitle {
+
+    margin: 0 0 28px;
+
+    text-align: center;
+
+    color: #925d9f;
+
+    font-size: 14px;
+}
+
+
+/* Input label */
+
+label {
+
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: #75487d;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+/* Nickname input */
+
+input {
+
+    width: 100%;
+
+    padding: 15px 17px;
+
+    border-radius: 16px;
+
+    border: 2px solid rgba(190,130,205,.35);
+
+    background: rgba(255,255,255,.75);
+
+    color: #66356f;
+
+    outline: none;
+
+    font-size: 17px;
+
+    transition: .25s;
+}
+
+
+input::placeholder {
+
+    color: #b58abb;
+}
+
+
+input:focus {
+
+    border-color: #c47bd7;
+
+    box-shadow:
+        0 0 0 4px rgba(210,130,225,.15);
+}
+
+
+/* Nickname preview */
+
+.preview {
+
+    margin-top: 22px;
+
+    padding: 25px 15px;
+
+    border-radius: 20px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            rgba(255,220,240,.75),
+            rgba(230,215,255,.75)
+        );
+
+    border: 1px solid rgba(255,255,255,.8);
+
+    text-align: center;
+
+    box-shadow:
+        inset 0 0 20px rgba(255,255,255,.45);
+}
+
+
+.preview-title {
+
+    color: #a064a9;
+
+    font-size: 11px;
+
+    margin-bottom: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 2px;
+}
+
+
+#output {
+
+    font-size: 28px;
+
+    line-height: 1.5;
+
+    color: #63346f;
+
+    word-break: break-all;
+
+    text-shadow:
+        0 2px 8px rgba(255,255,255,.9);
+}
+
+
+/* Copy button */
+
+button {
+
+    width: 100%;
+
+    margin-top: 17px;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #d878bd,
+            #9b79d8
+        );
+
+    color: white;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(160,90,180,.25);
+
+    transition: .2s;
+}
+
+
+button:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 25px rgba(160,90,180,.35);
+}
+
+
+button:active {
+
+    transform: scale(.98);
+}
+
+
+/* Examples */
+
+.examples {
+
+    margin-top: 22px;
+
+    padding: 15px;
+
+    border-radius: 16px;
+
+    background: rgba(255,255,255,.45);
+
+    color: #9a679f;
+
+    font-size: 13px;
+
+    line-height: 1.9;
+
+    text-align: center;
+}
+
+
+.examples span {
+
+    color: #704178;
+
+    font-weight: 500;
+}
+
+
+/* Bottom decoration */
+
+.bottom-decoration {
+
+    margin-top: 20px;
+
+    text-align: center;
+
+    font-size: 22px;
+
+    letter-spacing: 8px;
+
+    opacity: .75;
+}
+
+
+/* Mobile */
+
+@media (max-width: 480px) {
+
+    .card {
+
+        padding: 25px 20px;
+
+        border-radius: 25px;
+    }
+
+
+    h1 {
+
+        font-size: 23px;
+    }
+
+
+    #output {
+
+        font-size: 24px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+    <!-- Decorative flowers -->
+
+    <div class="flower one">
+        🌸
+    </div>
+
+
+    <div class="flower two">
+        🌷
+    </div>
+
+
+    <div class="flower three">
+        ✿
+    </div>
+
+
+
+    <!-- Main title -->
+
+    <h1>
+        𝙻𝙴𝚂𝙱𝙸𝙰𝙽を𝙿𝚁𝙸𝙼𝙴
+    </h1>
+
+
+    <p class="subtitle">
+        ✧ Create your perfect Blood Strike nickname ✧
+    </p>
+
+
+
+    <!-- Nickname input -->
+
+    <label for="name">
+        🌷 Enter your nickname
+    </label>
+
+
+    <input
+
+        id="name"
+
+        type="text"
+
+        placeholder="e.g. LEGIT"
+
+        autocomplete="off"
+
+        spellcheck="false"
+
+    >
+
+
+
+    <!-- Preview -->
+
+    <div class="preview">
+
+
+        <div class="preview-title">
+
+            ✿ Your Nickname ✿
+
+        </div>
+
+
+        <div id="output">
+
+            𝙻𝙿を𝙻𝙴𝙶𝙸𝚃
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- Copy button -->
+
+    <button id="copyBtn">
+
+        🌸 Copy Nickname 🌸
+
+    </button>
+
+
+
+    <!-- Examples -->
+
+    <div class="examples">
+
+        🌷 <b>Examples</b> 🌷
+
+        <br>
+
+
+        <span>
+
+            LEGIT → 𝙻𝙿を𝙻𝙴𝙶𝙸𝚃
+
+        </span>
+
+        <br>
+
+
+        <span>
+
+            DHRUV → 𝙻𝙿を𝙳𝙷𝚁𝚄𝚅
+
+        </span>
+
+        <br>
+
+
+        <span>
+
+            ANYNAME → 𝙻𝙿を𝙰𝙽𝚈𝙽𝙰𝙼𝙴
+
+        </span>
+
+    </div>
+
+
+
+    <!-- Bottom flowers -->
+
+    <div class="bottom-decoration">
+
+        🌸 ✿ 🌷 ✿ 🌺 ✿ 🌸
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+/*
+    Mathematical Monospace Unicode alphabet
+
+    A-Z → 𝙰-𝚉
+    a-z → 𝚊-𝚣
+*/
+
+const upperStart = 0x1D670;
+
+const lowerStart = 0x1D68A;
+
+
+
+/*
+    Convert normal English
+    letters into the clan font
+*/
+
+function convertToMono(text) {
+
+    return [...text].map(character => {
+
+        const code =
+            character.codePointAt(0);
+
+
+        /* A-Z */
+
+        if (
+            code >= 65 &&
+            code <= 90
+        ) {
+
+            return String.fromCodePoint(
+
+                upperStart + (code - 65)
+
+            );
+
+        }
+
+
+        /* a-z */
+
+        if (
+            code >= 97 &&
+            code <= 122
+        ) {
+
+            return String.fromCodePoint(
+
+                lowerStart + (code - 97)
+
+            );
+
+        }
+
+
+        /*
+            Numbers, spaces and
+            symbols remain unchanged.
+        */
+
+        return character;
+
+    }).join('');
+
+}
+
+
+
+/*
+    Generate nickname
+*/
+
+function generateNickname() {
+
+
+    const input =
+        document.getElementById("name");
+
+
+    const output =
+        document.getElementById("output");
+
+
+    let name =
+        input.value.trim();
+
+
+    /*
+        Default nickname
+    */
+
+    if (name === "") {
+
+        name = "LEGIT";
+
+    }
+
+
+    const convertedName =
+        convertToMono(name);
+
+
+    /*
+        Clan prefix:
+
+        LPを + converted nickname
+    */
+
+    output.textContent =
+        "𝙻𝙿を" + convertedName;
+
+}
+
+
+
+/*
+    Update nickname
+    while typing
+*/
+
+document
+
+    .getElementById("name")
+
+    .addEventListener(
+
+        "input",
+
+        generateNickname
+
+    );
+
+
+
+/*
+    Copy nickname
+*/
+
+document
+
+    .getElementById("copyBtn")
+
+    .addEventListener(
+
+        "click",
+
+        async function() {
+
+
+            const nickname =
+
+                document
+
+                .getElementById("output")
+
+                .textContent;
+
+
+
+            try {
+
+
+                await navigator.clipboard.writeText(
+
+                    nickname
+
+                );
+
+
+                this.textContent =
+
+                    "🌸 Copied! 🌸";
+
+
+                setTimeout(() => {
+
+
+                    this.textContent =
+
+                        "🌸 Copy Nickname 🌸";
+
+
+                }, 1300);
+
+
+            }
+
+
+            catch (error) {
+
+
+                alert(
+
+                    "Copy failed. Please select the nickname manually."
+
+                );
+
+            }
+
+
+        }
+
+    );
+
+
+
+/*
+    Generate default nickname
+*/
+
+generateNickname();
+
+</script>
+
+
+</body>
+
+</html>
